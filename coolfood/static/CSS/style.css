@@ -1,0 +1,119 @@
+/*页头*/
+header {
+    background-color: #45b68b;
+    height: 52px;
+    border-color: #080808;
+    line-height: 20px;
+}
+
+header a.logo {
+    font-size: 1.5rem;
+}
+
+.fixed-top .container-header {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+/*页尾*/
+.footer .container {
+    margin-left: 15px;
+}
+
+/*主体部分*/
+body {
+    background: #f8f8f8;
+}
+
+.col-9, .col-3 {
+    margin-top: 75px;
+    margin-bottom: 25px;
+}
+
+.col-nav {
+    margin: 0;
+}
+
+.col-nav a:hover {
+    background-color: #15810d;
+}
+
+.search {
+    margin-top: 8px;
+}
+
+.list-group-item h3 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 7px;
+}
+
+.list-group-item h3 a {
+    color: #0c3d27;
+    text-decoration: none;
+}
+
+.menu-nav .nav-link {
+    padding: 0rem 0.5rem;
+    margin-bottom: 20px;
+}
+
+.nav-cates .nav-link {
+    color: #ffffff;
+    padding: 1rem 1rem;
+}
+
+.power {
+    color: #bbb6b6;
+    margin-top: 25px;
+}
+
+/*侧边栏*/
+.sidebar-item {
+    padding: 0;
+}
+
+.sidebar-title {
+    background: #45b68b;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.sidebar a {
+    color: #444;
+}
+
+/*评论区*/
+.comment-list form {
+    width: 80%;
+}
+
+.comment-list .list-group-item {
+    width: 80%;
+}
+
+.nickname a {
+    font-size: 1.5rem;
+    color: #222222;
+}
+
+/*详情页*/
+.ingredients {
+    margin-bottom: 30px;
+}
+
+/*图片*/
+.pic {
+    height: 30%;
+    width: 30%;
+}
+
+.detail-pic {
+    height: 75%;
+    width: 75%;
+}
+
+.container-pic {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}

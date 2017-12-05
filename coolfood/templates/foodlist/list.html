@@ -1,0 +1,52 @@
+{% extends "./base.html" %}
+
+{% block content %}
+    <div class="container-fluid">
+    {% if query %}
+        您搜索的关键词"{{ query }}"结果如下：
+    {% endif %}
+        {% if menus %}
+            <ul class="list-group">
+                {% for menu in menus %}
+                    <li class="list-group-item">
+                        <h3>
+                            <a href="{% url 'detail' menu.id %}"> {{ menu.name }}</a>
+                        </h3>
+                        <div class="container">
+                            <nav class="nav menu-nav">
+                                分类：<a class="nav-link"
+                                      href="{% url 'category' menu.category.id %}"> {{ menu.category }} </a>
+                                标签：{% for tag in menu.tags.all %}<a class="nav-link" href="{% url 'tag' tag.id %}">
+                                {{ tag.name }} </a>{% endfor %}
+                                作者：<a class="nav-link" href="#"> {{ menu.owner }}</a>
+                                创建时间：<a class="nav-link disabled" herf="#">{{ menu.created_time }} </a>
+                            </nav>
+                        </div>
+                    <div class="container-pic">
+                        <img class="pic" src="../../static/pic/{{ menu.name }}.jpg" onerror="this.style.display='none'">
+                    </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <ul class="pagination">
+                {% if page_obj.has_previous %}
+                    {% if query %}
+                        <li><a href="?page={{ page_obj.previous_page_number }}&query={{ query }}">&laquo;</a></li>
+                    {% else %}
+                        <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                    {% endif %}
+                {% endif %}
+                Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+                {% if page_obj.has_next %}
+                    {% if query %}
+                        <a href="?page={{ page_obj.next_page_number }}&query={{ query }}">下一页</a>
+                    {% else %}
+                        <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+                    {% endif %}
+                {% endif %}
+                {% else %}
+                无记录!!!
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

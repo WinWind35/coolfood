@@ -1,0 +1,23 @@
+{% extends '../foodlist/base.html' %}
+
+{% block content %}
+    <table class="table links">
+        <thead>
+        <tr>
+            <th scope="col">Logo</th>
+            <th scope="col">名称</th>
+            <th scope="col">网址</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for link in links %}
+            <tr>
+                <th><img src="{{ link.href }}/favicon.ico"></th>
+                <th>{{ link.title }}</th>
+                <th><a href="{{ link.href }}" >{{ link.href }}</a></th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% include '../comment/block.html' %}
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "./base.html" %}
+
+{% block content %}
+
+    <nav aria-label="breadcrumb" role="navigation">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">首页</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'category' menu.category.id %}">{{ menu.category.name }}</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">正文</li>
+        </ol>
+    </nav>
+    <div class="menu-element">
+        <h3 class="menu-element-title" style="border-bottom: 1px solid #ccc">{{ menu.name }}</h3>
+        <div>
+            <nav class="nav menu-nav">
+                分类：<a class="nav-link"
+                      href="{% url 'category' menu.category.id %}"> {{ menu.category }} </a>
+                标签：{% for tag in menu.tags.all %}<a class="nav-link" href="{% url 'tag' tag.id %}">
+                {{ tag.name }} </a>{% endfor %}
+                作者：<a class="nav-link" href="#"> {{ menu.owner }}</a>
+                浏览：{{ menu.pv }}次
+                创建时间：<a class="nav-link disabled">{{ menu.created_time }} </a>
+            </nav>
+        </div>
+    </div>
+    <div class="container-pic">
+        <img class="detail-pic" src="../../static/pic/{{ menu.name }}.jpg" onerror="this.style.display='none'">
+    </div>
+    <article class="ingredients">用料：{{ menu.ingredients }}</article>
+    <article class="content">{{ menu.content }}</article>
+    {% include 'comment/block.html' %}
+{% endblock %}
