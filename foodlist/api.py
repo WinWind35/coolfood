@@ -21,6 +21,7 @@ class MenuSerializer(serializers.HyperlinkedModelSerializer):
         read_only=True,
         slug_field='username',
     )
+    created_time = serializers.DateTimeField(format="%Y-%M-%D %H:%M:%S")
 
     class Meta:
         model = Menu
@@ -45,6 +46,7 @@ class MenuDetailSerializer(serializers.HyperlinkedModelSerializer):
         read_only=True,
         slug_field='username',
     )
+    created_time = serializers.DateTimeField(format="%Y-%M-%D %H:%M:%S")
 
     class Meta:
         model = Menu
@@ -123,6 +125,7 @@ class TagViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         self.serializer_class = TagDetailSerializer
+        import pdb;pdb.set_trace()
         return super(TagViewSet, self).retrieve(request, *args, **kwargs)
 
 
