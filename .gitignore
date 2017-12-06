@@ -100,3 +100,8 @@ ENV/
 
 # mypy
 .mypy_cache/
+.DS_Store
+.idea/inspectionProfiles/
+.idea/workspace.xml
+coolfood/.DS_Store
+coolfood/templates/.DS_Store
