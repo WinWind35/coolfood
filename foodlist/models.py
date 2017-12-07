@@ -20,6 +20,7 @@ class Menu(models.Model):
     content = models.TextField(verbose_name="内容", blank=True,  help_text="注：目前仅支持Markdown格式数据")
     status = models.IntegerField(default=1, choices=STATUS_ITEMS, verbose_name="状态")
     owner = models.ForeignKey(User, verbose_name="作者")
+    favorite = models.ManyToManyField(User,related_name='favorites', verbose_name="收藏")
 
     pv = models.PositiveIntegerField(default=0)
     uv = models.PositiveIntegerField(default=0)
@@ -38,6 +39,12 @@ class Menu(models.Model):
 
     def increase_uv(self):
         return type(self).objects.filter(pk=self.pk).update(uv=F('uv') + 1)
+
+    def like(self, username):
+        return type(self).objects.get(pk=self.pk).favorite.add(User.objects.get(username=username))
+
+    def unlike(self, username):
+        return type(self).objects.get(pk=self.pk).favorite.remove(User.objects.get(username=username))
 
     class Meta:
         verbose_name = verbose_name_plural = "菜肴"

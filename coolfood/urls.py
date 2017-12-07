@@ -24,7 +24,7 @@ from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
 from django.contrib.auth.views import LoginView, LogoutView
 
-from foodlist.views import IndexView, CategoryView, TagView, MenuView
+from foodlist.views import IndexView, CategoryView, TagView, MenuView, FavoriteView
 from comment.views import CommentView
 from config.views import LinkView, RegisterView
 from foodlist.api import MenuViewSet, CategoryViewSet, TagViewSet, UserViewSet
@@ -41,6 +41,7 @@ urlpatterns = [
     url(r'^category/(?P<category_id>\d+)/$', CategoryView.as_view(), name="category"),
     url(r'^tag/(?P<tag_id>\d+)/$', TagView.as_view(), name="tag"),
     url(r'^menu/(?P<pk>\d+)/$', MenuView.as_view(), name="detail"),
+    url(r'^favorite/$', FavoriteView.as_view(), name="favorite"),
     url(r'^comment/$', CommentView.as_view(), name="comment"),
     url(r'^links/$', LinkView.as_view(), name="links"),
 

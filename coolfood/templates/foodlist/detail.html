@@ -21,6 +21,14 @@
                 作者：<a class="nav-link" href="#"> {{ menu.owner }}</a>
                 浏览：{{ menu.pv }}次
                 创建时间：<a class="nav-link disabled">{{ menu.created_time }} </a>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    {% if like %}
+                        <input type="submit" value="取消收藏">
+                    {% else %}
+                        <input type="submit" value="收藏">
+                    {% endif %}
+                </form>
             </nav>
         </div>
     </div>

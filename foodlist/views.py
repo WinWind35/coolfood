@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.views.generic import ListView, DetailView
 from django.core.cache import cache
+from django.contrib.auth.models import User
 
 from .models import Menu, Category, Tag
 from comment.models import Comment
@@ -98,6 +99,11 @@ class MenuView(CommonMixin, DetailView):
         self.pv_uv()
         return response
 
+    def post(self, request, *args, **kwargs):
+        username = request.user.username
+        self.like_unlike(username)
+        return self.get(request, *args, **kwargs)
+
     def pv_uv(self):
         sessionid = self.request.COOKIES.get('sessionid')
         if not sessionid:
@@ -113,6 +119,14 @@ class MenuView(CommonMixin, DetailView):
             self.object.increase_uv()
             cache.set(uv_key, 1, 60 * 60 * 24)
 
+    def like_unlike(self, username):
+        user = self.request.user
+        like = Menu.objects.filter(pk=self.kwargs.get('pk')).filter(favorite=user)
+        if like:
+            self.get_object().unlike(username)
+        else:
+            self.get_object().like(username)
+
     def get_context_data(self, **kwargs):
         user = self.request.user
         initial = {
@@ -121,9 +135,20 @@ class MenuView(CommonMixin, DetailView):
         }
         if user.username != '':
             initial.update({'email': user.email})
+
+        like = Menu.objects.filter(pk=self.kwargs.get('pk')).filter(favorite=user)
         comments = Comment.objects.filter(target=self.request.path)
         comment_form = CommentForm(initial=initial)
         kwargs.update({'comments': comments,
                        'comment_form': comment_form,
+                       'like': like,
                        })
         return super(MenuView, self).get_context_data(**kwargs)
+
+
+class FavoriteView(BasePostView):
+    def get_queryset(self):
+        qs = super(FavoriteView, self).get_queryset()
+        user = User.objects.get(username=self.request.user.username)
+        menus = Menu.objects.filter(favorite=user)
+        return menus
