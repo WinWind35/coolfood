@@ -1,0 +1,20 @@
+{% extends "../foodlist/base.html" %}
+
+{% block content %}
+    <h1>用户注册</h1>
+    <form method="post" action=".">
+        <p><label for="id_username">用户名:</label>
+            {% csrf_token %}
+            {{ register_form.username }}</p>
+        <p><label for="id_password1">密码:</label>
+            {% csrf_token %}
+            {{ register_form.password1 }}</p>
+        <p><label for="id_password2">密码确认:</label>
+            {% csrf_token %}
+            {{ register_form.password2 }}</p>
+        <input type="hidden" name="next" value="{{ next }}"/>
+        {% csrf_token %}
+        <input type="submit" value="注册"/>
+        　　　　
+    </form>
+{% endblock %}

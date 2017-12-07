@@ -28,6 +28,8 @@ class CommonMixin(object):
         hot_menus = Menu.objects.filter(status=1).order_by('-pv')[:10]
         recently_comments = Comment.objects.filter(status=1)[:10]
 
+        next = self.request.GET.get('next')
+
         kwargs.update({
             'nav_cates': nav_cates,
             'cates': cates,
@@ -35,6 +37,7 @@ class CommonMixin(object):
             'recently_menus': recently_menus,
             'hot_menus': hot_menus,
             'recently_comments': recently_comments,
+            'next': next,
         })
         return super(CommonMixin, self).get_context_data(**kwargs)
 
@@ -57,7 +60,12 @@ class IndexView(BasePostView):
 
     def get_context_data(self, **kwargs):
         query = self.request.GET.get('query')
-        return super(IndexView, self).get_context_data(query=query)
+        user = self.request.user
+        kwargs.update({
+            'query': query,
+            'user': user,
+        })
+        return super(IndexView, self).get_context_data(**kwargs)
 
 
 class CategoryView(BasePostView):
@@ -106,8 +114,15 @@ class MenuView(CommonMixin, DetailView):
             cache.set(uv_key, 1, 60 * 60 * 24)
 
     def get_context_data(self, **kwargs):
+        user = self.request.user
+        initial = {
+            'target': self.request.path,
+            'nickname': user.username,
+        }
+        if user.username != '':
+            initial.update({'email': user.email})
         comments = Comment.objects.filter(target=self.request.path)
-        comment_form = CommentForm(initial={'target': self.request.path})
+        comment_form = CommentForm(initial=initial)
         kwargs.update({'comments': comments,
                        'comment_form': comment_form,
                        })

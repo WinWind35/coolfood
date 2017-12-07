@@ -1,17 +1,21 @@
 <hr/>
 <div class="comment-list">
-    <form action="/comment/" method="post">
-        {% csrf_token %}
-        {{ comment_form }}
-        <input type="submit" value="提交评论">
-    </form>
+    {% if user.username %}
+        <form action="/comment/" method="post">
+            {% csrf_token %}
+            {{ comment_form }}
+            <input type="submit" value="提交评论">
+        </form>
+    {% else %}
+        需要<a href="{% url 'login' %}?next={{ request.path }}">登录</a>才能发起评论！<hr/>
+    {% endif %}
     评论:
     {% for comment in comments %}
         <li class="list-group-item">
             <div class="nickname">
                 <a href="{{ comment.website }}"> {{ comment.nickname }} </a>
-            --
-            <span>{{ comment.created_time }}</span>
+                --
+                <span>{{ comment.created_time }}</span>
             </div>
             <div class="comment-content">
                 <p>{{ comment.content }}</p>

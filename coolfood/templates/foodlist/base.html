@@ -100,6 +100,14 @@
         <div class="container power">
             <span class="text-meted">Power by COOLFOOD@WinWind</span>
         </div>
+        {% if user.username %}
+            欢迎{{ user.username }},
+            <a href="{% url 'logout' %}?next={{ request.path }}">注销</a>
+        {% else %}
+            <a href="{% url 'register' %}?next={{ request.path }}">注册</a>
+            ，已有账号？
+            <a href="{% url 'login' %}?next={{ request.path }}">请登录</a>
+        {% endif %}
     </div>
 </footer>
 </body>

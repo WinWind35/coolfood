@@ -22,6 +22,7 @@ from .autocomplete import CategoryAutocomplete, TagAutocomplete
 from django.conf.urls import include
 from rest_framework import routers
 from rest_framework.documentation import include_docs_urls
+from django.contrib.auth.views import LoginView, LogoutView
 
 from foodlist.views import IndexView, CategoryView, TagView, MenuView
 from comment.views import CommentView
@@ -44,6 +45,8 @@ urlpatterns = [
     url(r'^links/$', LinkView.as_view(), name="links"),
 
     url(r'^register/$', RegisterView.as_view(), name="register"),
+    url(r'^login/$', LoginView.as_view(), name="login"),
+    url(r'^logout/$', LogoutView.as_view(), name="logout"),
 
     url(r'^category-autocomplete/$', CategoryAutocomplete.as_view(), name='category-autocomplete'),
     url(r'^tag-autocomplete/$', TagAutocomplete.as_view(), name='tag-autocomplete'),
